@@ -11,7 +11,7 @@ if (year) {
 
 if (header) {
   const syncHeader = () => {
-    header.classList.toggle("is-scrolled", window.scrollY > 12);
+    header.classList.toggle("scrolled", window.scrollY > 12);
   };
   syncHeader();
   window.addEventListener("scroll", syncHeader, { passive: true });
@@ -44,6 +44,8 @@ document.addEventListener("keydown", (event) => {
 function createCircuitBackground(target) {
   const context = target.getContext("2d");
   if (!context) return;
+  const hero = target.closest(".hero");
+  if (!hero) return;
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const state = {
@@ -57,24 +59,39 @@ function createCircuitBackground(target) {
     lastPulse: 0,
     lastLine: 0,
     frameInterval: 1000 / 30,
+    mouse: {
+      x: 0,
+      y: 0,
+      strength: 0,
+      targetStrength: 0,
+      lastMove: 0,
+    },
   };
 
   const resize = () => {
-    const rect = target.getBoundingClientRect();
-    state.width = Math.max(1, Math.floor(rect.width));
-    state.height = Math.max(1, Math.floor(rect.height));
+    state.width = Math.max(1, Math.floor(hero.offsetWidth));
+    state.height = Math.max(1, Math.floor(hero.offsetHeight));
     target.width = Math.floor(state.width * state.dpr);
     target.height = Math.floor(state.height * state.dpr);
     context.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
 
-    const spacing = state.width < 700 ? 64 : 76;
-    const offsetX = (state.width % spacing) / 2;
-    const offsetY = (state.height % spacing) / 2;
+    const spacing = 60;
     const nodes = [];
+    let index = 0;
 
-    for (let y = offsetY; y <= state.height; y += spacing) {
-      for (let x = offsetX; x <= state.width; x += spacing) {
-        nodes.push({ x, y });
+    for (let y = 0; y <= state.height; y += spacing) {
+      for (let x = 0; x <= state.width; x += spacing) {
+        const seed = Math.sin(index * 12.9898) * 43758.5453;
+        const fraction = seed - Math.floor(seed);
+        nodes.push({
+          x,
+          y,
+          angle: fraction * Math.PI * 2,
+          phase: fraction * Math.PI * 4,
+          spin: index % 2 === 0 ? 1 : -1,
+          weight: 14 + fraction * 18,
+        });
+        index += 1;
       }
     }
 
@@ -83,17 +100,50 @@ function createCircuitBackground(target) {
     state.lines = [];
   };
 
-  const drawDot = (node, alpha, radius, glow) => {
+  const positionForNode = (node, now) => {
+    const idleDrift = Math.sin(now * 0.0007 + node.phase) * 0.45;
+    const point = {
+      x: node.x + Math.cos(node.angle) * idleDrift,
+      y: node.y + Math.sin(node.angle) * idleDrift,
+    };
+
+    if (state.mouse.strength <= 0.01) return point;
+
+    const dx = node.x - state.mouse.x;
+    const dy = node.y - state.mouse.y;
+    const distance = Math.hypot(dx, dy) || 1;
+    const influenceRadius = state.width < 700 ? 150 : 230;
+    const proximity = Math.max(0, 1 - distance / influenceRadius);
+    if (proximity <= 0) return point;
+
+    const eased = proximity * proximity * state.mouse.strength;
+    const radialX = dx / distance;
+    const radialY = dy / distance;
+    const seededX = Math.cos(node.angle);
+    const seededY = Math.sin(node.angle);
+    const tangentX = -radialY * node.spin;
+    const tangentY = radialX * node.spin;
+
+    point.x += (seededX * 0.55 + radialX * 0.35 + tangentX * 0.22) * node.weight * eased;
+    point.y += (seededY * 0.55 + radialY * 0.35 + tangentY * 0.22) * node.weight * eased;
+    return point;
+  };
+
+  const drawDot = (point, alpha, radius, glow) => {
+    const dotRadius = Math.min(radius, 2);
     context.beginPath();
     context.fillStyle = `rgba(59, 130, 246, ${alpha})`;
-    context.arc(node.x, node.y, radius, 0, Math.PI * 2);
+    context.arc(point.x, point.y, dotRadius, 0, Math.PI * 2);
     context.fill();
 
     if (glow) {
       context.beginPath();
+      context.shadowColor = "rgba(59, 130, 246, 0.85)";
+      context.shadowBlur = 6;
       context.fillStyle = `rgba(59, 130, 246, ${alpha * 0.16})`;
-      context.arc(node.x, node.y, radius * 6, 0, Math.PI * 2);
+      context.arc(point.x, point.y, dotRadius, 0, Math.PI * 2);
       context.fill();
+      context.shadowBlur = 0;
     }
   };
 
@@ -133,8 +183,13 @@ function createCircuitBackground(target) {
     if (now - state.lastFrame < state.frameInterval) return;
     state.lastFrame = now;
 
+    if (now - state.mouse.lastMove > 1600) {
+      state.mouse.targetStrength = 0;
+    }
+    state.mouse.strength += (state.mouse.targetStrength - state.mouse.strength) * 0.12;
+
     context.clearRect(0, 0, state.width, state.height);
-    state.nodes.forEach((node) => drawDot(node, 0.25, 1.5, false));
+    state.nodes.forEach((node) => drawDot(positionForNode(node, now), 0.2, 1.5, false));
 
     if (now - state.lastPulse > 180 + Math.random() * 220) {
       spawnPulse(now);
@@ -153,8 +208,10 @@ function createCircuitBackground(target) {
       context.beginPath();
       context.strokeStyle = `rgba(59, 130, 246, ${alpha})`;
       context.lineWidth = 0.4;
-      context.moveTo(line.from.x, line.from.y);
-      context.lineTo(line.to.x, line.to.y);
+      const from = positionForNode(line.from, now);
+      const to = positionForNode(line.to, now);
+      context.moveTo(from.x, from.y);
+      context.lineTo(to.x, to.y);
       context.stroke();
     });
 
@@ -162,13 +219,30 @@ function createCircuitBackground(target) {
     state.pulses.forEach((pulse) => {
       const age = (now - pulse.born) / pulse.duration;
       const alpha = 0.25 + Math.sin(Math.PI * age) * 0.6;
-      const radius = 1.7 + Math.sin(Math.PI * age) * 0.7;
-      drawDot(pulse.node, alpha, radius, true);
+      drawDot(positionForNode(pulse.node, now), alpha, 1.8, true);
     });
   };
 
   resize();
   window.addEventListener("resize", resize);
+  hero.addEventListener(
+    "pointermove",
+    (event) => {
+      const rect = hero.getBoundingClientRect();
+      state.mouse.x = event.clientX - rect.left;
+      state.mouse.y = event.clientY - rect.top;
+      state.mouse.targetStrength = 1;
+      state.mouse.lastMove = performance.now();
+    },
+    { passive: true },
+  );
+  hero.addEventListener(
+    "pointerleave",
+    () => {
+      state.mouse.targetStrength = 0;
+    },
+    { passive: true },
+  );
 
   if (reducedMotion.matches) {
     renderStatic();

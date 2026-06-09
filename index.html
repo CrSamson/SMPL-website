@@ -21,7 +21,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Syne:wght@500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -32,7 +32,6 @@
     <header class="site-header" data-header>
       <a class="brand" href="#top" aria-label="SMPL Innovations home">
         <span class="logo-mark" aria-hidden="true">smpl</span>
-        <span class="brand-name">SMPL Innovations</span>
       </a>
 
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-nav-toggle>
@@ -55,55 +54,40 @@
         <div class="hero-vignette" aria-hidden="true"></div>
 
         <div class="hero-inner">
-          <p class="eyebrow">Simplify your operations</p>
+          <div class="hero-eyebrow" aria-label="Simplify your operations">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">Simplify your operations</span>
+          </div>
           <h1 id="hero-title">Eliminate your administrative debt.</h1>
-          <p class="hero-copy">
-            We analyze and optimize your processes, turning best practices into systems
-            that give you a competitive edge. By eliminating repetitive work through
-            intelligent automation, we free your team to focus on what truly drives growth.
-          </p>
+          <p class="hero-copy">We remove the manual. You keep the momentum.</p>
           <div class="hero-actions" aria-label="Primary actions">
             <a class="button button-primary" href="#book">Meet an SMPL expert</a>
             <a class="button button-ghost" href="#work">View use cases</a>
           </div>
-          <ul class="hero-meta" aria-label="SMPL traits">
-            <li>Montreal-based</li>
-            <li>EN / FR</li>
-            <li>Automation, AI, Tools</li>
-          </ul>
         </div>
       </section>
 
-      <section class="metric-band" aria-labelledby="metrics-title">
-        <div class="section-kicker" id="metrics-title">Operational proof</div>
-        <div class="metric-grid">
-          <article class="metric-card metric-card-large">
-            <span>Manual steps removed</span>
-            <strong>43</strong>
-            <p>from one core administrative process</p>
+      <section class="how-we-work" aria-labelledby="work-method-title">
+        <p class="section-label" id="work-method-title">How we work</p>
+        <div class="steps-grid">
+          <article class="step-card">
+            <span class="step-number">01</span>
+            <h3 class="step-title">Map the debt</h3>
+            <p class="step-desc">We audit your current workflows and identify every manual step slowing your team down.</p>
           </article>
-          <article class="metric-card">
-            <span>Delivery language</span>
-            <strong>EN / FR</strong>
-            <p>Bilingual project work for Quebec organizations</p>
+
+          <article class="step-card">
+            <span class="step-number">02</span>
+            <h3 class="step-title">Build the system</h3>
+            <p class="step-desc">We design and deploy the smallest durable solution - automation, AI, or custom tooling.</p>
           </article>
-          <article class="metric-card">
-            <span>Service model</span>
-            <strong>3 tiers</strong>
-            <p>Automation, AI integration and custom tools</p>
+
+          <article class="step-card">
+            <span class="step-number">03</span>
+            <h3 class="step-title">Hand it off clean</h3>
+            <p class="step-desc">Your team owns the result. We document everything, train everyone, and stay available.</p>
           </article>
         </div>
-      </section>
-
-      <section class="audience-strip" aria-label="Client contexts">
-        <span>Built for operational teams in</span>
-        <ul>
-          <li>SMEs</li>
-          <li>NPOs</li>
-          <li>Food banks</li>
-          <li>Service providers</li>
-          <li>Community organizations</li>
-        </ul>
       </section>
 
       <section class="section services-section" id="services" aria-labelledby="services-title">

@@ -56,10 +56,7 @@ The hero should reuse the current SMPL content and make it sharper:
 
 - Eyebrow: `Simplify your operations`
 - Main headline: `Eliminate your administrative debt.`
-- Supporting copy: `We analyze and optimize your processes, turning best
-  practices into systems that give you a competitive edge. By eliminating
-  repetitive work through intelligent automation, we free your team to focus on
-  what truly drives growth.`
+- Supporting copy: `We remove the manual. You keep the momentum.`
 - Primary CTA: `Meet an SMPL expert`
 - Secondary CTA: `View use cases`
 
@@ -91,7 +88,7 @@ hype-driven:
 Recommended order for the landing page:
 
 1. Hero with the Wix-aligned promise and direct CTA.
-2. Audience/proof strip for SMEs, NPOs and service organizations.
+2. How We Work: map the debt, build the system, hand it off clean.
 3. Three-step offer: business process automation, AI integration/data analysis,
    custom digital tools.
 4. Before/after section explaining administrative debt.

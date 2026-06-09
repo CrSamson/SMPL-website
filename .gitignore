@@ -37,6 +37,7 @@ pnpm-debug.log*
 coverage/
 playwright-report/
 test-results/
+.playwright-mcp/
 
 # OS files
 .DS_Store
