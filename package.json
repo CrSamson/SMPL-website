@@ -1,0 +1,9 @@
+{
+  "name": "smpl-website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node -e \"console.log('Static SMPL website ready for Vercel')\"",
+    "test": "node -e \"const fs=require('fs'); const required=['index.html','styles.css','script.js','vercel.json','privacy.html','cookies.html','legal.html','Design.md','logo_smpl.avif','assets/logo.svg','assets/og-image.svg']; required.forEach((file)=>{ if(!fs.existsSync(file)) throw new Error(file+' missing') }); const html=fs.readFileSync('index.html','utf8'); ['#services','#work','#about','#blog','#book','#faq'].forEach((anchor)=>{ if(!html.includes('id=\\\"'+anchor.slice(1)+'\\\"')) throw new Error(anchor+' target missing') }); console.log('Static checks passed')\""
+  }
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title desc">
+  <title id="title">SMPL Innovations</title>
+  <desc id="desc">SMPL Innovations geometric wordmark.</desc>
+  <rect width="120" height="120" rx="28" fill="#061827"/>
+  <path d="M28 34h38c15 0 26 11 26 26S81 86 66 86H28V34Zm16 15v22h21c7 0 12-5 12-11s-5-11-12-11H44Z" fill="#49D5FF"/>
+  <path d="M28 86V34h16v37h48v15H28Z" fill="#64E6BD" opacity=".92"/>
+  <path d="M28 34h18l15 20 15-20h18v52H78V58L63 78h-5L44 58v28H28V34Z" fill="#F7FBFF" opacity=".96"/>
+</svg>

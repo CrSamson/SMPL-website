@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+
+# Vercel and build output
+.vercel/
+dist/
+build/
+out/
+.next/
+.output/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Caches
+.cache/
+.parcel-cache/
+.turbo/
+.eslintcache
+.stylelintcache
+
+# Test and coverage output
+coverage/
+playwright-report/
+test-results/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor and local workspace settings
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Python local server/cache artifacts
+__pycache__/
+*.py[cod]
