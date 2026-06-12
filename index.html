@@ -20,7 +20,21 @@
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
     <link
       rel="preload"
+      href="assets/fonts/archivo-latin-wdth-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
       href="assets/fonts/inter-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/fragment-mono-latin-normal.woff2"
       as="font"
       type="font/woff2"
       crossorigin
@@ -28,6 +42,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="grain" aria-hidden="true"></div>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header" data-header>
@@ -55,18 +70,40 @@
         <div class="hero-vignette" aria-hidden="true"></div>
 
         <div class="hero-inner">
-          <div class="hero-eyebrow" aria-label="Simplify your operations">
-            <span class="eyebrow-line"></span>
-            <span class="eyebrow-text">Simplify your operations</span>
+          <div class="hero-text">
+            <div class="hero-eyebrow" aria-label="Simplify your operations">
+              <span class="eyebrow-line"></span>
+              <span class="eyebrow-text">Simplify your operations</span>
+            </div>
+            <h1 id="hero-title">Eliminate your administrative debt.</h1>
+            <p class="hero-copy">
+              We transform your cumbersome workflows and connect your isolated software
+              with intelligent applications &mdash; without having to replace your current systems.
+            </p>
+            <div class="hero-actions" aria-label="Primary actions">
+              <a class="button button-primary" href="#book">Meet an SMPL expert</a>
+              <a class="button button-ghost" href="#work">View use cases</a>
+            </div>
           </div>
-          <h1 id="hero-title">Eliminate your administrative debt.</h1>
-          <p class="hero-copy">
-            We transform your cumbersome workflows and connect your isolated software
-            with intelligent applications &mdash; without having to replace your current systems.
-          </p>
-          <div class="hero-actions" aria-label="Primary actions">
-            <a class="button button-primary" href="#book">Meet an SMPL expert</a>
-            <a class="button button-ghost" href="#work">View use cases</a>
+
+          <div class="hero-visual" aria-hidden="true">
+            <div class="hero-panel">
+              <div class="hero-panel-head">
+                <span>Ops overview</span>
+                <span class="hero-panel-live"><i></i>Live</span>
+              </div>
+              <ul class="hero-panel-flows">
+                <li><span>Field reports &rarr; CRM</span><em>Automated</em></li>
+                <li><span>Invoices &rarr; accounting</span><em>Synced</em></li>
+                <li><span>Inventory counts</span><em>Real-time</em></li>
+                <li><span>Monthly reporting</span><em>Instant</em></li>
+              </ul>
+              <div class="hero-panel-meter">
+                <span>Admin hours / week</span>
+                <div class="meter-row"><i class="meter-before"></i><em>Before &middot; 14 h</em></div>
+                <div class="meter-row"><i class="meter-after"></i><em>With SMPL &middot; 2 h</em></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -82,7 +119,7 @@
         </div>
 
         <div class="service-grid">
-          <article class="service-card">
+          <article class="service-card service-card-flagship">
             <span class="service-index">01 &middot; Automation</span>
             <h3>End double data entry</h3>
             <p>
@@ -95,6 +132,9 @@
               <li>CRM, form and spreadsheet integrations</li>
               <li>Approval flows where judgment matters</li>
             </ul>
+            <div class="service-flow" aria-hidden="true">
+              <span>Form</span><i></i><span>CRM</span><i></i><span>Accounting</span>
+            </div>
           </article>
 
           <article class="service-card">
@@ -247,6 +287,31 @@
         </div>
       </section>
 
+      <div class="marquee-band" aria-hidden="true">
+        <div class="marquee-track">
+          <ul class="marquee-list">
+            <li>Workflow automation</li>
+            <li>System integration</li>
+            <li>AI assistants</li>
+            <li>Operational dashboards</li>
+            <li>Custom internal tools</li>
+            <li>Process mapping</li>
+            <li>Data centralization</li>
+            <li>Montreal &middot; QC</li>
+          </ul>
+          <ul class="marquee-list">
+            <li>Workflow automation</li>
+            <li>System integration</li>
+            <li>AI assistants</li>
+            <li>Operational dashboards</li>
+            <li>Custom internal tools</li>
+            <li>Process mapping</li>
+            <li>Data centralization</li>
+            <li>Montreal &middot; QC</li>
+          </ul>
+        </div>
+      </div>
+
       <section class="section process-section" aria-labelledby="process-title">
         <div class="section-heading">
           <p class="eyebrow">How we work</p>
@@ -291,22 +356,18 @@
 
         <div class="team-grid" aria-label="Founding team">
           <article>
-            <span>AT</span>
             <h3>Anthony</h3>
             <p>B.Eng - ETS Montreal</p>
           </article>
           <article>
-            <span>MC</span>
             <h3>Marc</h3>
             <p>B.Eng - Polytechnique Montreal</p>
           </article>
           <article>
-            <span>MR</span>
             <h3>Marcel</h3>
             <p>B.Eng - ETS Montreal</p>
           </article>
           <article>
-            <span>CS</span>
             <h3>Cristian</h3>
             <p>B.Eng - Polytechnique Montreal</p>
           </article>

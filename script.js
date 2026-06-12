@@ -255,3 +255,66 @@ function createCircuitBackground(target) {
 if (canvas) {
   createCircuitBackground(canvas);
 }
+
+// Cursor spotlight: cards expose the pointer position as --mx/--my custom
+// properties; styles.css paints a radial glow at that point on hover.
+const SPOTLIGHT_TARGETS =
+  ".service-card, .debt-panel, .case-card, .audience-grid article, .process-list li";
+
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  document.addEventListener(
+    "pointermove",
+    (event) => {
+      const card = event.target.closest?.(SPOTLIGHT_TARGETS);
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty("--mx", `${event.clientX - rect.left}px`);
+      card.style.setProperty("--my", `${event.clientY - rect.top}px`);
+    },
+    { passive: true },
+  );
+}
+
+// Decode-on-hover for the mono nav links. Fragment Mono is monospaced, so the
+// scramble never shifts layout; skipped for touch and reduced-motion users.
+const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ/<>+=*";
+
+if (
+  nav &&
+  window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+  !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+) {
+  nav.querySelectorAll("a").forEach((link) => {
+    const original = link.textContent;
+    let timer = null;
+
+    const stop = () => {
+      clearInterval(timer);
+      timer = null;
+      link.textContent = original;
+    };
+
+    link.addEventListener("mouseenter", () => {
+      let frame = 0;
+      const frames = 12;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        frame += 1;
+        if (frame >= frames) {
+          stop();
+          return;
+        }
+        const revealed = Math.floor((frame / frames) * original.length);
+        link.textContent = original
+          .split("")
+          .map((char, index) => {
+            if (char === " " || index < revealed) return char;
+            return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+          })
+          .join("");
+      }, 28);
+    });
+
+    link.addEventListener("mouseleave", stop);
+  });
+}
